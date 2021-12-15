@@ -1,11 +1,19 @@
-import React from 'react'
+import React from 'react';
+import Card from '../Card';
+
 
 function home() {
     return (
-        <div className='home'>
-            Home page
-        </div>
-    )
+        
+    <div>
+
+        <center>
+            <br>
+   </br>
+ <Card/></center>
+   </div>
+        
+    );
 }
 
 export default home

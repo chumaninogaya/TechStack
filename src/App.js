@@ -5,6 +5,7 @@ import SideNav from './SidebarNav';
 import Home from './pages/Home';
 import Supplier from "./pages/Supplier";
 import Contractor from "./pages/Contractor";
+
 // import sidebar from "./sidebar";
 
 function App() {
