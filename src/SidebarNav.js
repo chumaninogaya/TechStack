@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import {SidebarData } from './SidebarData';
 import './Sidebar.css';
 import {IconContext} from 'react-icons';
+import tech from './img/tech.png';
+import Home from './pages/Home';
+
 
 function SidebarNav() {
     const [sidebar, setSidebar] = useState(false);
@@ -16,6 +19,9 @@ function SidebarNav() {
         <div className='navbar'>
           <Link to='#' className='menu-bars'>
                <MenuIconss.FaBars onClick={showSiderbar}/>
+               &nbsp;
+               <img alt="logo" style={{ width: "80px", height: "60px" }} src={tech}></img>
+           
            </Link>
        </div>
        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

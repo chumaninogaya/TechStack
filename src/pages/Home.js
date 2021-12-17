@@ -8,8 +8,9 @@ function home() {
     <div>
 
         <center>
-            <br>
-   </br>
+     
+   <div className='header'>Welcome To Tech Stack</div>
+   <br/>
  <Card/></center>
    </div>
         
