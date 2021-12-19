@@ -24,7 +24,8 @@ function Card() {
        </a>
       <div class="card__info">
         <span class="card__category"> GOOGLE</span>
-        <h3 class="card__title">CLICK TO VISIT GOOGLE</h3>
+        <a href="https://google.com">
+        <h3 class="card__title">CLICK TO VISIT GOOGLE</h3></a>
         <span class="card__by"> <a href="#" class="card__author" title="author"></a></span>
       </div>
     </article>
@@ -45,7 +46,8 @@ function Card() {
       </Link></a >
       <div class="card__info">
         <span class="card__category"> SUPPLIERS </span>
-        <h3 class="card__title">VIEW SUPPLIER DATA</h3>
+        <Link to="/Supplier" >
+        <h3 class="card__title">VIEW SUPPLIER DATA</h3></Link>
         <span class="card__by"> 
         <Link to="/Supplier" class="card__author" title="author"></Link>
         <a href="" class="card__author" title="author"></a></span>
@@ -67,7 +69,8 @@ function Card() {
       </Link>
       <div class="card__info">
         <span class="card__category"> CONTRACTORS</span>
-        <h3 class="card__title">VIEW CONTRACTOR DATA</h3>
+        <Link to="/Contractor">
+        <h3 class="card__title">VIEW CONTRACTOR DATA</h3></Link>
         <span class="card__by"> <a href="#" class="card__author" title="author"></a></span>
       </div>
     </article>  
