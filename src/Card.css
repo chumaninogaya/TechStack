@@ -25,10 +25,10 @@
 
 .card--2 .card__img, .card--2 .card__img--hover {
 
-    background-image: url("C:\Users\DSKTech\Documents\GitHub\TechStack\src\pictures\Supplier.png");
+    background-image: url("C:\Users\DSKTech\Documents\GitHub\TechStack\src\pictures\Contractor.png");
 }
 .card--3 .card__img, .card--3 .card__img--hover {
-    background-image: url("C:\Users\DSKTech\Documents\GitHub\TechStack\src\pictures\Contractor.png");
+    background-image: url("C:\Users\DSKTech\Documents\GitHub\TechStack\src\pictures\Supplier.png");
 }
 
 .card__like {
