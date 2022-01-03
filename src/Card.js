@@ -25,6 +25,7 @@ function Card() {
       <div class="card__info">
         <span class="card__category"> GOOGLE</span>
         <a href="https://google.com">
+
         <h3 class="card__title">CLICK TO VISIT GOOGLE</h3></a>
         <span class="card__by"> <a href="#" class="card__author" title="author"></a></span>
       </div>

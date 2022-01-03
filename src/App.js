@@ -6,7 +6,6 @@ import Home from './pages/Home';
 import Supplier from "./pages/Supplier";
 import Contractor from "./pages/Contractor";
 import PFooter from "./footer";
-// import sidebar from "./sidebar";
 
 function App() {
   return (
