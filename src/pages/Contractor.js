@@ -1,13 +1,15 @@
-
+import '../Table.css';
 import React, { useState,useEffect } from "react";
 import axios from 'axios';
 import BootstrapTable  from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { Modal, Button } from "react-bootstrap";
+import useFullPageLoader from "../useFullPageLoader";
 const Contractor = () => {
    
+    // const [percontract, setPercontract] = useState([]);
     const [contractors, setContractor] = useState([]);
-   
+    const [loader, showLoader, hideLoader] = useFullPageLoader();
       const[modalInfo, setModalInfo] = useState([]);
       const [showModal, setShowModal] = useState(false);
 
@@ -16,25 +18,33 @@ const Contractor = () => {
       const handleShow = () => setShow(true);
 
       const getContractorData= async () => {
+        showLoader();
         try{
             const data=await axios.get(
-                "https://nba-players.herokuapp.com/players-stats"
+                "https://dskapi.azurewebsites.net/api/GetContractMasterDatas"
             );
+          
             setContractor(data.data)
+            hideLoader();
     }catch (e) {
         console.log(e);
     }
         
     };
+   
 
     useEffect(() => {
         getContractorData();
     },[]);
 
     const columns =[ 
-        {dataField: "name",text: "Contractor Name "},
-        {dataField: "points_per_game",text: "Contract Term"},
-        {dataField: "team_name",text: "Contractor Description"},
+        {dataField: "contractDataID",text: "contractDataID Name "},
+        {dataField: "department",text: "Contract Term"},
+        {dataField: "buyer",text: "Contractor Description"},
+        {dataField: "documentNo",text: "contractDataID Name "},
+        {dataField: "zfsCode",text: "Contract Term"},
+        {dataField: "commodity",text: "Contractor Description"},
+    
     ];
 
 
@@ -50,15 +60,45 @@ const Contractor = () => {
       setShowModal(handleShow);
     };
 
+ 
     const ModalContent = () => {
+     
+    //   const getContractor= async () => {
+    //     try{
+    //     const res = await axios.get('https://dskapi.azurewebsites.net/api/GetAllContractCaputredData', {
+    //       params: {
+    //         contractDataID: modalInfo.contractDataID
+    //       }
+    //    });
+    //    setPercontract(res.data)
+    //   }catch (e) {
+    //     console.log(e);
+    // }
+        
+      
+
+    
+    //   };
+    //   useEffect(() => {
+    //     getContractor();
+    // },[]);
+
       return (
+        
         <Modal show= {show} onHide ={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>{modalInfo.name}</Modal.Title>
+            <Modal.Title>{modalInfo.department}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
               <center>
            <h1> Contractor </h1>
+           <label>department code</label> &nbsp;  &nbsp;  &nbsp; 
+           <input type="text" value={modalInfo.department}></input>
+           <br/> <label>Buyer</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            <input type="text" value={modalInfo.buyer}></input>
+          <br></br>
+            <label>Commodity</label> &nbsp; 
+            <input type="text" value={modalInfo.commodity}></input>
            </center>
 
           </Modal.Body>
@@ -88,6 +128,7 @@ const Contractor = () => {
 
              />
              {show ? <ModalContent/> : null}
+             {loader}
         </div>
     );
 };
