@@ -1,135 +1,154 @@
 import '../Table.css';
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import BootstrapTable  from "react-bootstrap-table-next";
+import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, ToggleButton } from "react-bootstrap";
 import useFullPageLoader from "../useFullPageLoader";
+
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+
 const Contractor = () => {
-   
-    // const [percontract, setPercontract] = useState([]);
-    const [contractors, setContractor] = useState([]);
-    const [loader, showLoader, hideLoader] = useFullPageLoader();
-      const[modalInfo, setModalInfo] = useState([]);
-      const [showModal, setShowModal] = useState(false);
 
-      const[show,setShow]= useState(false);
-      const handleClose = () => setShow(false);
-      const handleShow = () => setShow(true);
+  const [contractors, setContractor] = useState([]);
+  const [loader, showLoader, hideLoader] = useFullPageLoader();
+  const [modalInfo, setModalInfo] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [contractorModal,setContractorModal]=useState([]);
+  const [contractorCapturedData,setContractorCapturedData]=useState([]);
+  const[contractorCapturedDataId, setContractorCapturedDataId]= useState();
+  const[divisionalHead, setDivisionalHead]= useState();
+  const[comment, setComment]= useState();
 
-      const getContractorData= async () => {
-        showLoader();
-        try{
-            const data=await axios.get(
-                "https://dskapi.azurewebsites.net/api/GetContractMasterDatas"
-            );
-          
-            setContractor(data.data)
-            hideLoader();
-    }catch (e) {
-        console.log(e);
-    }
-        
-    };
-   
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    useEffect(() => {
-        getContractorData();
-    },[]);
-
-    const columns =[ 
-        {dataField: "contractDataID",text: "contractDataID Name "},
-        {dataField: "department",text: "Contract Term"},
-        {dataField: "buyer",text: "Contractor Description"},
-        {dataField: "documentNo",text: "contractDataID Name "},
-        {dataField: "zfsCode",text: "Contract Term"},
-        {dataField: "commodity",text: "Contractor Description"},
-    
-    ];
-
-
-    const rowEvents ={
-      onClick: (e,row)=> {
-        console.log(row);
-        setModalInfo(row)
-        toggleTrueFalse()
-      },
-    };
-
-    const toggleTrueFalse= () => {
-      setShowModal(handleShow);
-    };
-
- 
-    const ModalContent = () => {
-     
-    //   const getContractor= async () => {
-    //     try{
-    //     const res = await axios.get('https://dskapi.azurewebsites.net/api/GetAllContractCaputredData', {
-    //       params: {
-    //         contractDataID: modalInfo.contractDataID
-    //       }
-    //    });
-    //    setPercontract(res.data)
-    //   }catch (e) {
-    //     console.log(e);
-    // }
-        
-      
-
-    
-    //   };
-    //   useEffect(() => {
-    //     getContractor();
-    // },[]);
-
-      return (
-        
-        <Modal show= {show} onHide ={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{modalInfo.department}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-              <center>
-           <h1> Contractor </h1>
-           <label>department code</label> &nbsp;  &nbsp;  &nbsp; 
-           <input type="text" value={modalInfo.department}></input>
-           <br/> <label>Buyer</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-            <input type="text" value={modalInfo.buyer}></input>
-          <br></br>
-            <label>Commodity</label> &nbsp; 
-            <input type="text" value={modalInfo.commodity}></input>
-           </center>
-
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
+  const getContractorData = async () => {
+    showLoader();
+    try {
+      const data = await axios.get(
+        "https://dskapi.azurewebsites.net/api/GetContractMasterDatas"
       );
 
+      setContractor(data.data)
+      hideLoader();
+    } catch (e) {
+      console.log(e);
     }
+    
 
+  };
+
+
+  useEffect(() => {
+    getContractorData();
+  }, []);
+
+
+
+
+  const columns = [
+    { dataField: "contractDataID", text: "contractDataID Name " },
+    { dataField: "department", text: "Contract Term" },
+    { dataField: "buyer", text: "Contractor Description" },
+    { dataField: "documentNo", text: "contractDataID Name " },
+    { dataField: "commodity", text: "Commodity" },
+    { dataField: "zfsCode", text: "Contract Term" },
+    { dataField: "supplier", text: "Supplier" },
+    { dataField: "approvalDate", text: "Approval Date" },
+    { dataField: "creationDate", text: "Creation Date" },
+    { dataField: "purchContTitle", text: "Purchase Content Title" },
+    { dataField: "volumeNewActEuro", text: "Volume" },
+    { dataField: "estRands", text: "East Rands" },
+    { dataField: "beginMonth", text: "Begin Month" },
+    { dataField: "endMonth", text: "End Month" },
+    { dataField: "monthEnding", text: "Month Ending" },
+    { dataField: "endYear", text: "End Year" },
+    { dataField: "numberOfMonths", text: "Number of Months" },
+    { dataField: "statusValidity", text: "Status Validity" },
+    { dataField: "compBid", text: "CompBid" },
+    { dataField: "sapPurchaseOrderNo", text: "SAAPurchase Order No" },
+
+
+  ];
+
+
+  const getContractorCapturedData = (capId) => {
+    let contractorCapturedArray =contractors.map(function(contrCapture)
+    {
+      if(contrCapture.contractorDataID===capId) {
+        return contrCapture
+      }
+    })  
+  
+
+  let  contractor=contractorCapturedArray.filter(function (e) {return e!=null})
+  return contractor[0] ["captureData"] [0]
+}
+
+
+
+
+  const rowEvents = {
+    onClick: (e, row) => {
+      console.log(row);
+      setModalInfo(row)
+      toggleTrueFalse()
+    },
+  };
+
+  const toggleTrueFalse = () => {
+    setShowModal(handleShow);
+  };
+
+
+  const ModalContent = () => {
+
+    
     return (
-        <div className="Contractor">
-            <center>
-            <h1>Contractor Data</h1>
-            </center>
-            
-             <BootstrapTable
-             
-             keyField="name"
-             data={contractors}
-             columns={columns}
-             pagination={paginationFactory()}
-              rowEvents={rowEvents}
 
-             />
-             {show ? <ModalContent/> : null}
-             {loader}
-        </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalInfo.department}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          
+            <h1> Contractor </h1>
+            <br/>                
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     );
+
+  }
+
+  return (
+    <div className="Contractor">
+      <center>
+        <h1>Contractor Data</h1>
+      </center>
+
+      <BootstrapTable
+
+        keyField="name"
+        data={contractors}
+        columns={columns}
+        pagination={paginationFactory()}
+        rowEvents={rowEvents}
+
+      />
+      {show ? <ModalContent
+      
+      
+      /> : null}
+      {loader}
+    </div>
+  );
 };
 export default Contractor;
