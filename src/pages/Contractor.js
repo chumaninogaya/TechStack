@@ -18,7 +18,12 @@ const Contractor = () => {
   const [contractorCapturedData,setContractorCapturedData]=useState([]);
   const[contractorCapturedDataId, setContractorCapturedDataId]= useState();
   const[divisionalHead, setDivisionalHead]= useState();
-  const[comment, setComment]= useState();
+
+   const[contractCaptureDataID, setContractCaptureDataID]=useState();
+   const[captureData, setCaptureData] = useState();
+   const[comment, setComment] = useState();
+   const[ledSplit, setLedSplit] = useState();
+   const[plantRelavent, setPlantRelavent] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -33,6 +38,7 @@ const Contractor = () => {
 
       setContractor(data.data)
       hideLoader();
+      console.log(data)
     } catch (e) {
       console.log(e);
     }
@@ -77,7 +83,7 @@ const Contractor = () => {
   const getContractorCapturedData = (capId) => {
     let contractorCapturedArray =contractors.map(function(contrCapture)
     {
-      if(contrCapture.contractorDataID===capId) {
+      if(contrCapture.contractDataID===capId) {
         return contrCapture
       }
     })  
@@ -93,6 +99,12 @@ const Contractor = () => {
   const rowEvents = {
     onClick: (e, row) => {
       console.log(row);
+      let capturedata = getContractorCapturedData(row.contractDataID)
+      setContractCaptureDataID(capturedata["contractCaptureDataID"])
+      setContractorCapturedData(capturedata)
+      setLedSplit(capturedata["ledSplit"])
+      setPlantRelavent(capturedata["plantRelevant"])
+      setComment(capturedata["comment"])
       setModalInfo(row)
       toggleTrueFalse()
     },
@@ -115,7 +127,21 @@ const Contractor = () => {
         <Modal.Body>
           
             <h1> Contractor </h1>
-            <br/>                
+            <br/>   
+            <label>LED Split
+              </label>     
+              <select defaultValue={ledSplit && ledSplit} >
+                <option value="MBSA">MBSA</option>
+                <option value="DTBSA">DTBSA</option>
+                <option value="MBFS">MBFS</option>
+                <option value="Trucks">Trucks</option>
+                <option value="Vans">Vans</option>
+                <option value="SMH">SMH</option>
+              </select>
+              <br>
+              </br>
+              <label>Comment</label>
+              <input type="text" value={comment && comment}></input>
 
         </Modal.Body>
         <Modal.Footer>
